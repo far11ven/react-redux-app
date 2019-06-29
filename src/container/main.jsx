@@ -3,100 +3,10 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Navbar from "../components/navbar";
 import ItemList from "../components/item-list";
-import Item from "../components/item";
 import Cart from "../components/cart";
+import ItemDetail from "../components/item-detail";
 
 class Main extends Component {
-  handleIncrement = counter => {
-    console.log("clicked increment button");
-    const countersNew = [...this.props.counters];
-    const index = countersNew.indexOf(counter);
-
-    countersNew[index] = { ...counter };
-
-    ++countersNew[index].value;
-
-    console.log("countersNew[index] :", countersNew[index]);
-
-    this.setState({ counters: countersNew });
-    this.updateTotalItems();
-  };
-
-  handleDecrement = counter => {
-    console.log("clicked decrement button");
-
-    const countersNew = [...this.state.counters];
-    const index = countersNew.indexOf(counter);
-
-    countersNew[index] = { ...counter };
-
-    if (countersNew[index].value > 0) {
-      --countersNew[index].value;
-      this.setState({ counters: countersNew });
-    }
-    this.updateTotalItems();
-  };
-
-  handleAdd = () => {
-    console.log("clicked ADD button");
-
-    var countersNew = this.state.counters.slice();
-
-    if (this.state.counters.length > 0) {
-      countersNew.push({
-        id: this.state.counters[this.state.counters.length - 1].id + 1,
-        value: 0
-      });
-    } else {
-      countersNew.push({ id: 0, value: 0 });
-    }
-    this.setState({ counters: countersNew });
-    this.updateTotalItems();
-  };
-
-  handleReset = () => {
-    console.log("clicked RESET button");
-    const countersNew = this.state.counters.map(c => {
-      c.value = 0;
-      return c;
-    });
-
-    this.setState({ counters: countersNew });
-    this.updateTotalItems();
-  };
-
-  handleDelete = counterId => {
-    const counters = this.state.counters.filter(c => c.id !== counterId);
-    this.setState({ counters: counters });
-    this.updateTotalItems();
-  };
-
-  handleNavigate = counter => {
-    // this.props.history.push({
-    //   state: { detail: "Hello" }
-    // });
-
-    // console.log("Saving data in history", this.props.history);
-
-    let counterId = counter.id;
-
-    this.setState({ selectedCounterId: counterId });
-  };
-
-  updateTotalItems = () => {
-    let i = 0;
-    this.state.counters.filter(c => {
-      i += c.value;
-      console.log("i", c.value);
-      return i;
-    });
-    console.log("final i", i);
-    this.setState({ totalItems: i });
-
-    this.props.onUpdateTotal(this.state.totalItems); // updates value in Navbar via App Component
-    //localStorage.setItem("state", JSON.stringify(this.state));
-  };
-
   render() {
     let content;
 
@@ -108,6 +18,7 @@ class Main extends Component {
         <div>
           <h1>You've reached home</h1>
           <img
+            alt="Home"
             src={"https://picsum.photos/id/" + Math.floor(rand_id) + "/800/400"}
           />
         </div>
@@ -118,13 +29,25 @@ class Main extends Component {
       content = (
         <ItemList
           globalState={this.props.globalState}
-          onIncrement={this.props._handleIncrementItem}
-          onDecrement={this.props._handleDecrementItem}
+          onAddItem={this.props._handleAddNewItem}
+          onDeleteItem={this.props._handleDeleteItem}
+          onResetItemQt={this.props._handleResetQt}
+          onIncrementItem={this.props._handleIncrementItem}
+          onDecrementItem={this.props._handleDecrementItem}
           onAddCartItem={this.props._handleAddCartItem}
         />
       );
     } else if (this.props.location.pathname.includes("/item-list/")) {
-      content = <Item />;
+      const currItemId = this.props.location.pathname[
+        this.props.location.pathname.length - 1
+      ];
+      console.log("currItemId", currItemId);
+      content = (
+        <ItemDetail
+          globalState={this.props.globalState}
+          currItemId={currItemId}
+        />
+      );
     }
 
     return (
@@ -148,6 +71,9 @@ const mapStateToProps = state => {
 
 const mapActionsToProps = dispatch => {
   return {
+    _handleAddNewItem: item => dispatch({ type: "ADD_ITEM", itemId: item.id }),
+    _handleDeleteItem: item => dispatch({ type: "DEL_ITEM", itemId: item.id }),
+    _handleResetQt: item => dispatch({ type: "RESET_ITEM_QT" }),
     _handleIncrementItem: item =>
       dispatch({ type: "INC_ITEM", itemId: item.id }),
     _handleDecrementItem: item =>

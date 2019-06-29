@@ -14,24 +14,74 @@ class ItemList extends Component {
     return Math.random() + "_" + Math.random();
   }
 
+  getBadgeClasses(item) {
+    let classes = "badge m-2 badge-";
+    classes += item.value === 0 ? "warning" : "primary";
+    return classes;
+  }
+
   render() {
     return (
       <div>
-        <button className="btn btn-primary btn-sm m-2">Add Product</button>
-        <button className="btn btn-primary btn-sm m-2">RESET</button>
+        <button
+          onClick={this.props.onAddItem}
+          className="btn btn-primary btn-sm m-2"
+        >
+          Add Product
+        </button>
+        <button
+          onClick={this.props.onResetItemQt}
+          className="btn btn-primary btn-sm m-2"
+        >
+          RESET Qt.
+        </button>
         <hr />
         <div className="item-body">
           {this.props.globalState.itemCatalogue.map(item => (
             <Item
-              key={this.getRandomItemId() + "_" + Item.id}
-              onIncrement={this.props.onIncrement}
-              onDecrement={this.props.onDecrement}
-              onAddCartItem={this.props.onAddCartItem}
-              // onDelete={this.props.onDelete}
-              // onNavigate={this.props.onNavigate}
+              key={this.getRandomItemId()}
+              onDelete={this.props.onDeleteItem}
               item={item}
             >
-              <h4> Item #{}</h4>
+              <div>
+                <h4> Item #{}</h4>
+                <h5> Quantity : </h5>
+                <button
+                  onClick={() => this.props.onDecrementItem(item)}
+                  className="btn btn-secondary btn-sm m-2"
+                >
+                  -
+                </button>
+
+                <span
+                  style={this.styles}
+                  className={this.getBadgeClasses(item)}
+                >
+                  {item.value}
+                </span>
+                <button
+                  onClick={() => this.props.onIncrementItem(item)}
+                  className="btn btn-secondary btn-sm m-2"
+                >
+                  +
+                </button>
+
+                <button
+                  onClick={() => this.props.onAddCartItem(item)}
+                  disabled={!item.value > 0}
+                  className="btn btn-info btn-sm m-2"
+                >
+                  Add to cart
+                </button>
+
+                <button
+                  onClick={() => this.props.onDeleteItem(item)}
+                  className="btn btn-danger btn-sm m-2"
+                >
+                  Delete Item
+                </button>
+                <br />
+              </div>
             </Item>
           ))}
         </div>

@@ -8,6 +8,8 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.css";
+import Main from "./container/main";
+import ItemDetail from "./components/item-detail";
 
 const store = createStore(reducer);
 
@@ -15,9 +17,8 @@ const rootElement = document.getElementById("root");
 const appRouter = (
   <Router>
     <Route exact path="/" component={App} />
-    <Route path="/cart" component={App} />
-    <Route path="/item-list" component={App} />
-    <Route exact path="/item-list/:id" component={App} />
+    <Route path="/cart" component={Main} />
+    <Route path="/item-list" component={Main} />
   </Router>
 );
 
