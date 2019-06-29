@@ -8,7 +8,7 @@ const NavBar = props => {
   return (
     <nav className="navbar navbar-light bg-light">
       <Link className="navbar-brand" to="/">
-        Home
+        <img alt="Home" src="/favicon.png" />
       </Link>
 
       <ul className="navbar-nav mr-auto">
