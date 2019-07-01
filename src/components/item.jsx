@@ -23,7 +23,7 @@ class Item extends Component {
         >
           <Link to={"/item-list/" + this.props.item.id}>
             <img
-              alt=""
+              alt="Goto Product Page"
               src={
                 this.state.imageUrl + (this.props.item.id + 100) + "/300/150"
               }

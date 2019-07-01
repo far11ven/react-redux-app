@@ -8,6 +8,7 @@ const defaultState = {
 
 const reducer = (state = { ...defaultState }, action) => {
   console.log("action.itemId :", action.itemId);
+
   switch (action.type) {
     case actionTypes.ADD_ITEM:
       let newADDItemListArr = state.itemList.slice();
@@ -24,7 +25,7 @@ const reducer = (state = { ...defaultState }, action) => {
       let newDeletedTotalItems = state.totalItems;
       let newDELItemListArr = state.itemList.slice();
       let listitemIndex = newDELItemListArr.findIndex(
-        obj => obj.id == action.itemId
+        obj => obj.id == action.itemId // Both have different type but same value hence, obj.id == action.itemId
       );
       console.log("listitemIndex :", listitemIndex);
       newDELItemListArr.splice(listitemIndex, 1);
@@ -32,7 +33,7 @@ const reducer = (state = { ...defaultState }, action) => {
       let newDELCartItemList = state.cartItemList.slice();
 
       let cartitemIndex = newDELCartItemList.findIndex(
-        obj => obj.id == action.itemId
+        obj => obj.id == action.itemId // Both have different type but same value hence, obj.id == action.itemId
       );
       console.log("cartitemIndex ; ", cartitemIndex);
       if (cartitemIndex !== -1) {
@@ -92,7 +93,7 @@ const reducer = (state = { ...defaultState }, action) => {
       let newCartItemList = state.cartItemList.slice();
 
       let existingItemIndex = newCartItemList.findIndex(
-        obj => obj.id == action.itemId
+        obj => obj.id == action.itemId // Both have different type but same value hence, obj.id == action.itemId
       );
 
       console.log("existingItemIndex ", existingItemIndex);
@@ -122,6 +123,9 @@ const reducer = (state = { ...defaultState }, action) => {
 
       console.log("newState :", addCartItemState);
       return addCartItemState;
+
+    default:
+      break;
   }
 
   return state;

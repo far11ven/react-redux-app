@@ -44,7 +44,7 @@ class ItemList extends Component {
               item={item}
             >
               <div>
-                <h4> Item #{}</h4>
+                <h4> Item # {item.id}</h4>
                 <h5> Quantity : </h5>
                 <button
                   onClick={() => this.props.onDecrementItem(item)}

@@ -46,6 +46,11 @@ class Main extends Component {
         <ItemDetail
           globalState={this.props.globalState}
           currItemId={currItemId}
+          onAddItem={this.props._handleAddNewItem}
+          onResetItemQt={this.props._handleResetQt}
+          onIncrementItem={this.props._handleIncrementItem}
+          onDecrementItem={this.props._handleDecrementItem}
+          onAddCartItem={this.props._handleAddCartItem}
         />
       );
     }
