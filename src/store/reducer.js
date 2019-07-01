@@ -2,7 +2,7 @@ import * as actionTypes from "./actions";
 
 const defaultState = {
   totalItems: 0,
-  itemList: [{ id: 0, value: 1 }, { id: 1, value: 1 }],
+  itemList: [{ id: 0, value: 0 }, { id: 1, value: 0 }],
   cartItemList: []
 };
 

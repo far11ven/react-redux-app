@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 //Staetless functional component
 
@@ -12,8 +12,10 @@ const NavBar = props => {
       </Link>
 
       <ul className="navbar-nav mr-auto">
-        <li className="nav-link">
-          <Link to="/item-list">Products</Link>
+        <li className="nav-link" style={{ marginLeft: "10px" }}>
+          <NavLink to="/item-list">
+            <h6>Products</h6>
+          </NavLink>
         </li>
       </ul>
       <form className="form-inline my-2 my-lg-0">
